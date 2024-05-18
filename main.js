@@ -16,7 +16,7 @@ function setMinTodoISODate(date) {
  * @param {Object} todo
  * @returns
  */
-function appendTodo(todo) {
+function create_todo(todo) {
   return `<li data-todo-label=${todo.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
             <p class="font-bold">Titre: ${todo.label}</p>
             <div class="flex flex-row">
@@ -93,12 +93,7 @@ const main = (function main() {
       : `<section class="mx-auto w-4/5 my-5">
         <ul class="todos-list flex flex-1 flex-wrap gap-3">${todos
           .map((d) => {
-            return `<li data-todo-label=${d.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
-                        <p class="font-bold">Titre: ${d.label}</p>
-                        <div class="flex flex-row">
-                           <p class="flex-1">${d.description}</p>  <button class="hover:scale-75"aria-label="Delete" data-todo-delete="${d.label}">❌</button>
-                        </div>
-                  </li>`;
+            return create_todo(d);
           })
           .join("")}
         </ul>
@@ -124,7 +119,7 @@ function add() {
     if (status === 201) {
       todos.push(payload);
       const todo_list = document.querySelector(".todos-list");
-      todo_list.insertAdjacentHTML("beforeend", appendTodo(payload));
+      todo_list.insertAdjacentHTML("beforeend", create_todo(payload));
     }
   });
 }

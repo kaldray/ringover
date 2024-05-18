@@ -47,10 +47,6 @@ const init = (function init() {
            <label class="text-center" for="start_date">Date de début</label>
            <input type="datetime-local" name="start_date" min=${setMinTodoISODate(new Date().toISOString())} id="start" class="p-2  border-black border" />
          </div>
-        <div class="flex flex-col gap-2">
-           <label class="text-center" for="end_date">Date de fin</label>
-           <input type="datetime-local" name="end_date" min=${setMinTodoISODate(new Date().toISOString())} id="start" class="p-2  border-black border" />
-         </div>
          <button type="submit" id="submit-todo" class="border-2 p-2 border-black rounded-md">Ajouter</button>
        </section>
      </form>
@@ -115,7 +111,6 @@ function add() {
     const payload = {
       label: formData.get("title"),
       start_date: new Date(formData.get("start_date")).toISOString(),
-      end_date: new Date(formData.get("end_date")).toISOString(),
       description: formData.get("description"),
     };
     const { status } = await addTodo(payload);

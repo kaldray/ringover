@@ -18,7 +18,10 @@ function setMinTodoISODate(date) {
  */
 function create_todo(todo) {
   return `<li data-todo-label=${todo.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
-            <p class="font-bold">Titre: ${todo.label}</p>
+            <div class="flex flex-row gap-2">
+              <p class="font-bold">Titre: ${todo.label}</p>
+              <span>Début:  ${new Intl.DateTimeFormat("fr-FR").format(new Date(todo.start_date))}</span>
+            </div>
             <div class="flex flex-row">
                <p class="flex-1">${todo.description}</p>  <button class="hover:scale-75" aria-label="Delete" data-todo-delete="${todo.label}">❌</button>
             </div>

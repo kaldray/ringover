@@ -20,7 +20,7 @@ function appendTodo(todo) {
   return `<li data-todo-label=${todo.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
             <p class="font-bold">Titre: ${todo.label}</p>
             <div class="flex flex-row">
-               <p class="flex-1">${todo.description}</p>  <button aria-label="Delete" data-todo-delete="${todo.label}">❌</button>
+               <p class="flex-1">${todo.description}</p>  <button class="hover:scale-75" aria-label="Delete" data-todo-delete="${todo.label}">❌</button>
             </div>
         </li>`;
 }
@@ -92,7 +92,7 @@ const main = (function main() {
             return `<li data-todo-label=${d.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
                         <p class="font-bold">Titre: ${d.label}</p>
                         <div class="flex flex-row">
-                           <p class="flex-1">${d.description}</p>  <button aria-label="Delete" data-todo-delete="${d.label}">❌</button>
+                           <p class="flex-1">${d.description}</p>  <button class="hover:scale-75"aria-label="Delete" data-todo-delete="${d.label}">❌</button>
                         </div>
                   </li>`;
           })

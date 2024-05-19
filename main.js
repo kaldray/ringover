@@ -61,6 +61,7 @@ const init = (function init() {
   const app_logic = {
     addTodo: add,
     removeTodo: remove,
+    search: search,
   };
 
   function render() {
@@ -74,6 +75,7 @@ const init = (function init() {
     main.render();
     app_logic.addTodo();
     app_logic.removeTodo();
+    app_logic.search();
   }
 
   return { render };
@@ -90,12 +92,21 @@ const main = (function main() {
     </section>
       `
       : `<section class="mx-auto w-4/5 my-5">
-        <ul class="todos-list flex flex-1 flex-wrap gap-3">${todos
-          .map((d) => {
-            return create_todo(d);
-          })
-          .join("")}
-        </ul>
+          <div class="mb-3">
+            <form>
+              <div class="flex flex-col">
+                <label for="search-todos">Trier les todos</label>
+                  <input class="p-2 border border-black" type="text" name="search-todos" id="search-todos" />
+                  <select></select>
+              </div>
+            </form>
+          </div>
+          <ul class="todos-list flex flex-1 flex-wrap gap-3">${todos
+            .map((d) => {
+              return create_todo(d);
+            })
+            .join("")}
+          </ul>
     </section>`;
     root.insertAdjacentHTML("beforeend", todos_section);
   }
@@ -133,6 +144,25 @@ function remove() {
         todo_html.remove();
       }
     }
+  });
+}
+
+function search() {
+  const search = document.querySelector("#search-todos");
+  const todos_list = document.querySelector(".todos-list");
+  search.addEventListener("input", (e) => {
+    const filtered_todos = todos.filter((todo) =>
+      todo.label.toLowerCase().includes(e.target.value.toLowerCase()),
+    );
+    Array.from(todos_list.children).forEach((elem) => elem.remove());
+    todos_list.insertAdjacentHTML(
+      "afterbegin",
+      filtered_todos
+        .map((d) => {
+          return create_todo(d);
+        })
+        .join(""),
+    );
   });
 }
 

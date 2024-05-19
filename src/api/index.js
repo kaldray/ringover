@@ -6,7 +6,11 @@ export async function getTodos() {
     if (!response.ok) {
       throw new Error("Bad response error", { cause: response.statusText });
     }
-    return response.json();
+    if (response.status === 200) {
+      return response.json();
+    } else if (response.status === 201 || response.status === 204) {
+      return [];
+    }
   } catch (err) {
     console.error(err);
   }

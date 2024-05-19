@@ -13,7 +13,8 @@ function setMinTodoISODate(date) {
 
 /**
  *
- * @param {Object} todo
+ * @typedef {{label:String,description:String,end_date:Date,start_date:Date,label:string}} Todo
+ * @param {Todo} todo
  * @returns
  */
 function create_todo(todo) {
@@ -87,9 +88,9 @@ const main = (function main() {
     const todos_section =
       todos.length === 0 ?
         `
-    <section class="mx-auto w-4/5 my-5 todos-container">
-        <p>Vous n'avez aucune todos !</p>
-    </section>
+      <section class="mx-auto w-4/5 my-5 todos-container">
+        <p class="text-center">Vous n'avez aucune todos !</p>
+      </section>
       `
       : `<section class="mx-auto w-4/5 my-5">
           <div class="mb-3">

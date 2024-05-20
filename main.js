@@ -1,6 +1,11 @@
 import "./style.css";
 import { getTodos, addTodo, removeTodo } from "#api/index.js";
 
+const app_listener = {
+  addTodo: add,
+  removeTodo: remove,
+  search: search,
+};
 let todos;
 
 /**
@@ -100,12 +105,6 @@ const init = (function init() {
         </nav>
     `;
 
-  const app_logic = {
-    addTodo: add,
-    removeTodo: remove,
-    search: search,
-  };
-
   function render() {
     root.insertAdjacentHTML("beforebegin", nav);
     root.insertAdjacentHTML("afterbegin", todo_form);
@@ -115,9 +114,9 @@ const init = (function init() {
   async function afterRender() {
     todos = await getTodos();
     todo_rendering.render();
-    app_logic.addTodo();
-    app_logic.removeTodo();
-    app_logic.search();
+    app_listener.addTodo();
+    app_listener.removeTodo();
+    app_listener.search();
   }
 
   return { render };
@@ -174,12 +173,14 @@ function add() {
       form.insertAdjacentElement("beforeend", span);
       setTimeout(() => span.remove(), 3000);
     }
+    app_listener.removeTodo();
+    app_listener.search();
   });
 }
 
 function remove() {
   const todos_list = document.querySelector(".todos-list");
-  todos_list?.addEventListener("click", async (e) => {
+  todos_list.addEventListener("click", async (e) => {
     const todo_to_delete = e.target.dataset.todoDelete ?? null;
     if (todo_to_delete) {
       const { status } = await removeTodo(todo_to_delete);
@@ -200,7 +201,7 @@ function remove() {
 function search() {
   const search = document.querySelector("#search-todos");
   const todos_list = document.querySelector(".todos-list");
-  search?.addEventListener("input", (e) => {
+  search.addEventListener("input", (e) => {
     const filtered_todos = todos.filter((todo) =>
       todo.label.toLowerCase().includes(e.target.value.toLowerCase()),
     );

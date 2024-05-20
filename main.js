@@ -152,6 +152,7 @@ function add() {
       start_date: new Date(formData.get("start_date")).toISOString(),
       description: formData.get("description"),
     };
+
     const { status } = await addTodo(payload);
     if (status === 201) {
       if (todos.length !== 0) {
@@ -164,6 +165,14 @@ function add() {
         Array.from(todo_container.children).forEach((elem) => elem.remove());
         todo_container.insertAdjacentHTML("beforeend", create_todos_form(todos));
       }
+    }
+    if (status === 409) {
+      const span = document.createElement("span");
+      span.textContent = "Le label est déjà utilisé.";
+      span.style.color = "red";
+      const form = document.querySelector("form");
+      form.insertAdjacentElement("beforeend", span);
+      setTimeout(() => span.remove(), 3000);
     }
   });
 }

@@ -31,7 +31,9 @@ export async function addTodo(payload) {
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
-      throw new Error("Bad response error", { cause: response.statusText });
+      if (response.status === 409) {
+        return { message: response.statusText, status: response.status };
+      }
     }
     return { message: response.statusText, status: response.status };
   } catch (err) {

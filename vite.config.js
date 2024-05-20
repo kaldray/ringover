@@ -6,6 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "#api": path.resolve(__dirname, "./src/api/"),
+      "#src": path.resolve(__dirname, "./src/"),
     },
   },
 });

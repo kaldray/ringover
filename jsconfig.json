@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "paths": {
-      "#api/*": ["./src/api/*"]
+      "#api/*": ["./src/api/*"],
+      "#src/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules"]

@@ -1,5 +1,6 @@
 import "./style.css";
 import { getTodos, addTodo, removeTodo } from "#api/index.js";
+import { setMinTodoISODate } from "#src/helpers.js";
 
 const app_listener = {
   addTodo: add,
@@ -7,14 +8,6 @@ const app_listener = {
   search: search,
 };
 let todos;
-
-/**
- * @param {String} date
- * @returns {Date}
- */
-function setMinTodoISODate(date) {
-  return date.split(".").at(0);
-}
 
 /**
  *

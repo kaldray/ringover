@@ -14,8 +14,7 @@ function setMinTodoISODate(date) {
 /**
  *
  * @typedef {{label:String,description:String,end_date:Date,start_date:Date,label:string}} Todo
- * @param {Todo} todo
- * @returns
+ * @param {Todo[]} todos
  */
 function create_todos(todos) {
   return todos
@@ -33,6 +32,11 @@ function create_todos(todos) {
     .join("");
 }
 
+/**
+ *
+ * @typedef {{label:String,description:String,end_date:Date,start_date:Date,label:string}} Todo
+ * @param {Todo} todo
+ */
 function create_todo(todo) {
   return `<li data-todo-label=${todo.label} class="flex-grow flex-shrink-0 basis-full bg-slate-400 p-2 rounded">
             <div class="flex flex-row gap-2">
@@ -45,20 +49,25 @@ function create_todo(todo) {
         </li>`;
 }
 
+/**
+ *
+ * @typedef {{label:String,description:String,end_date:Date,start_date:Date,label:string}} Todo
+ * @param {Todo[]} todos
+ */
 function create_todos_form(todos) {
   return `
-          <div class="mb-3">
-            <form>
-              <div class="flex flex-col">
-                <label for="search-todos">Trier les todos</label>
-                  <input class="p-2 border border-black" type="text" name="search-todos" id="search-todos" />
-              </div>
-            </form>
-          </div>
-          <ul class="todos-list flex flex-1 flex-wrap gap-3">
-            ${create_todos(todos)}
-          </ul>
-          `;
+  <div class="mb-3">
+  <form>
+  <div class="flex flex-col">
+  <label for="search-todos">Trier les todos</label>
+  <input class="p-2 border border-black" type="text" name="search-todos" id="search-todos" />
+  </div>
+  </form>
+  </div>
+  <ul class="todos-list flex flex-1 flex-wrap gap-3">
+  ${create_todos(todos)}
+  </ul>
+  `;
 }
 
 const init = (function init() {
@@ -116,7 +125,7 @@ const init = (function init() {
 
 const todo_rendering = (function () {
   const root = document.querySelector("#app");
-  async function render() {
+  function render() {
     const todo_container =
       todos.length === 0 ?
         `
@@ -168,6 +177,12 @@ function remove() {
       if (status === 200) {
         const todo_html = document.querySelector(`[data-todo-label=${todo_to_delete.toString()}]`);
         todo_html.remove();
+        todos = todos.filter((todo) => todo.label !== todo_to_delete);
+        if (todos.length === 0) {
+          const todo_container = document.querySelector(".todos-container");
+          todo_container.remove();
+          todo_rendering.render();
+        }
       }
     }
   });
